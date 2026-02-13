@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Emusio AI Practice Coach</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/practice_coach.css?v=emusio-final">
+
+  <!-- Mobile shell styles -->
+  <style>
+    body {
+      margin: 0;
+      background: #f5f5f7;
+    }
+
+    .mobile-shell {
+      max-width: 420px;
+      min-height: 100vh;
+      margin: 0 auto;
+      background: #ffffff;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mobile-shell">
+
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-badge">🎵</div>
+          <div class="brand-title">
+            <strong>Emusio</strong>
+            <span>AI Practice Coach</span>
+          </div>
+        </div>
+        <span class="badge">Phase 0 · Demo</span>
+      </div>
+    </div>
+
+    <!-- Main -->
+    <main class="container">
+
+      <!-- Hero -->
+      <div class="hero">
+        <h1 class="h1">What should I practice today?</h1>
+        <p class="p">
+          Generate short, actionable practice tasks based on your lesson notes.
+        </p>
+      </div>
+
+      <div class="grid">
+
+        <!-- INPUT CARD (solo si NO viene lesson_id) -->
+        {% if not lesson_id %}
+        <div class="card" id="input-card">
+          <div class="card-header">
+            <div class="card-title">Lesson notes</div>
+            <span class="badge">Input</span>
+          </div>
+
+          <div class="card-body">
+            <label class="label">Paste lesson transcription or notes</label>
+            <textarea
+              id="notes"
+              class="textarea"
+              placeholder="e.g. Today we worked on chord transitions, rhythm consistency..."
+            ></textarea>
+
+            <div class="row">
+              <button id="btn-generate" class="btn btn-primary">
+                Generate practice
+              </button>
+              <button id="btn-clear" class="btn">
+                Clear
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- OUTPUT CARD (siempre visible) -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Today's practice</div>
+            <span class="badge">Output</span>
+          </div>
+
+          <div class="card-body">
+            <div class="kpi">⏱ 5–10 minutes · 🎯 Focused practice</div>
+
+            <div id="output" class="output is-empty">
+              Preparing your practice plan…
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="/static/practice_coach.js?v=6"></script>
+
+</body>
+</html>

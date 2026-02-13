@@ -1,0 +1,252 @@
+/* =========================
+   Emusio-like (Mobile First)
+   Final – based on Theme + Screens
+   ========================= */
+
+/* 1) Design tokens (Emusio) */
+:root{
+  --primary: #2E7D89;
+  --accent:  #FF8C42;
+  --success: #4CAF50;
+
+  --text: #1A1A1A;
+  --text-2: #4A4A4A;
+  --text-3: #9E9E9E;
+  --border: #E0E0E0;
+  --white: #FFFFFF;
+
+  --bg: #dfeff9;
+  --bg-2: #fdf7ff;
+  --hero: #fdeeda;
+
+  --radius: 12px;
+  --radius-btn: 8px;
+  --unit: 8px;
+
+  --font: ui-sans-serif, system-ui, -apple-system, "SF Pro Text", "SF Pro Display", Roboto, Arial, sans-serif;
+
+  --shadow: 0 6px 20px rgba(0,0,0,.08);
+}
+
+/* 2) Reset */
+*{ box-sizing:border-box; }
+html,body{ height:100%; }
+body{
+  margin:0;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg-2);
+}
+
+a{ color:inherit; text-decoration:none; }
+button, input, textarea{ font:inherit; }
+
+/* 3) Layout */
+.topbar{
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner{
+  padding: 10px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.brand-badge{
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(46,125,137,.12);
+  display:grid;
+  place-items:center;
+}
+
+.brand-title strong{ font-size: 14px; }
+.brand-title span{ font-size: 12px; color: var(--text-2); }
+
+.container{
+  padding: 16px;
+}
+
+/* 4) Hero (Dashboard-style) */
+.hero{
+  background: var(--hero);
+  padding: 14px 16px;
+  margin: -16px -16px 12px;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+.h1{
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.p{
+  font-size: 16px;
+  color: var(--text-2);
+  margin: 0;
+}
+
+/* 5) Cards */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.card{
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow:hidden;
+}
+
+.card-header{
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.card-title{
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.card-body{
+  padding: 16px;
+}
+
+/* 6) Form */
+.label{
+  font-size: 12px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+  display:block;
+}
+
+.textarea{
+  width:100%;
+  min-height: 160px;
+  padding: 12px;
+  border-radius: var(--radius-btn);
+  border: 1px solid var(--border);
+  resize: vertical;
+}
+
+.textarea::placeholder{ color: var(--text-3); }
+
+.textarea:focus{
+  outline:none;
+  border-color: rgba(46,125,137,.6);
+  box-shadow: 0 0 0 3px rgba(46,125,137,.15);
+}
+
+/* 7) Buttons */
+.row{
+  display:flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.btn{
+  flex:1;
+  height: 48px;
+  border-radius: var(--radius-btn);
+  border: 2px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.btn-primary{
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* 8) Meta */
+.badge{
+  font-size: 11px;
+  padding: 5px 9px;
+}
+
+.kpi{
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.output{
+  margin-top: 14px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.btn{
+  letter-spacing: .2px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* UX states */
+.output.is-loading {
+  color: var(--text-2);
+  font-style: italic;
+}
+
+.output.is-empty {
+  color: var(--text-3);
+}
+
+.output.is-ready {
+  color: var(--text);
+  animation: fadeIn .25s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* -------- Practice Plan Markdown Styling -------- */
+
+.output h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.output h3 {
+  margin-top: 18px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.output ul {
+  padding-left: 20px;
+  margin-bottom: 10px;
+}
+
+.output li {
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+.output p {
+  margin-bottom: 8px;
+  line-height: 1.5;
+}

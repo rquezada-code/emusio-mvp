@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emusio Clone Actualizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- Reset y Estilos Base --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* --- Contenedor Móvil --- */
+        .mobile-container {
+            width: 100%;
+            max-width: 414px;
+            background-color: #fff;
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            padding-bottom: 90px; /* Espacio para la navbar */
+            overflow-x: hidden;
+        }
+
+        /* --- Status Bar (Simulada) --- */
+        .status-bar {
+            background-color: #FCEED9;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* --- Header Sección --- */
+        .header {
+            background-color: #FCEED9;
+            padding: 15px 24px 35px 24px;
+        }
+
+        .user-profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .greeting h1 {
+            font-size: 22px;
+            color: #EBC466; /* Tono dorado del texto */
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .greeting p {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+            max-width: 220px;
+            font-weight: 400;
+        }
+
+        .avatar {
+            width: 52px;
+            height: 52px;
+            background-color: #C4C4C4;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #555;
+            font-size: 26px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* --- NUEVO: Botón de Práctica --- */
+        .practice-btn-container {
+            margin-bottom: 25px;
+        }
+
+        .practice-btn {
+            width: 100%;
+            padding: 16px;
+            /* Elección de color UX: Naranja vibrante para resaltar sobre el beige */
+            background-color: #F39C12; 
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            /* Sombra suave naranja para darle profundidad */
+            box-shadow: 0 6px 15px rgba(243, 156, 18, 0.25);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .practice-btn:active {
+            transform: scale(0.98);
+             box-shadow: 0 4px 10px rgba(243, 156, 18, 0.2);
+        }
+
+        .practice-btn i {
+            font-size: 22px;
+        }
+
+        /* --- Grid de Estadísticas --- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card-icon {
+            color: #199BDE;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .card-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 4px;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: #777;
+            font-weight: 500;
+        }
+
+        /* --- Sección CTA (Azul Claro) --- */
+        .cta-section {
+            background-color: #DDF1FA;
+            padding: 45px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-section h2 {
+            font-size: 19px;
+            color: #222;
+            margin-bottom: 22px;
+            font-weight: 600;
+        }
+
+        .cta-btn {
+            background-color: #199BDE;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            max-width: 320px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(25, 155, 222, 0.2);
+        }
+
+        /* --- Sección Profesores --- */
+        .teachers-section {
+            padding: 28px 24px;
+        }
+
+        .teachers-section h3 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 18px;
+        }
+
+        .teachers-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding-bottom: 10px;
+            /* Ocultar scrollbar */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        
+        .teachers-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+
+        .teacher-card {
+            min-width: 210px;
+            height: 130px;
+            border-radius: 12px;
+            background-color: #e0e0e0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .teacher-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Filtro B&W para coincidir con el estilo de la imagen */
+            filter: grayscale(100%); 
+        }
+
+        /* --- Barra de Navegación Inferior --- */
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-around;
+            padding: 14px 10px 28px 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.02);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #888;
+            font-size: 10px;
+            font-weight: 500;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .nav-item i {
+            font-size: 21px;
+        }
+
+        .nav-item.active {
+            color: #199BDE;
+        }
+
+        .nav-item:hover {
+            color: #199BDE;
+        }
+
+        /* --- Modal: Lesson picker --- */
+        .lesson-modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        }
+
+        .lesson-modal.is-open {
+        display: block;
+        }
+
+        .lesson-modal__backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        }
+
+        .lesson-modal__panel {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% - 48px);
+        max-width: 360px;
+        background: #fff;
+        border-radius: 16px;
+        padding: 18px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+        text-align: center;
+        }
+
+        .lesson-modal__panel h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #222;
+        margin-bottom: 14px;
+        }
+
+        .lesson-modal__btn {
+        width: 100%;
+        padding: 14px 12px;
+        border-radius: 14px;
+        border: none;
+        background: #F39C12;
+        color: #fff;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        box-shadow: 0 6px 15px rgba(243, 156, 18, 0.20);
+        }
+
+        .lesson-modal__btn:active {
+        transform: scale(0.99);
+        }
+
+        .lesson-modal__cancel {
+        width: 100%;
+        padding: 12px 12px;
+        border-radius: 14px;
+        border: 1px solid #eee;
+        background: #fff;
+        color: #555;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="mobile-container">
+        <div class="status-bar">
+            <span>4:39</span>
+            <div>
+                <i class="fas fa-signal"></i>&nbsp;
+                <i class="fas fa-wifi"></i>&nbsp;
+                <i class="fas fa-battery-full"></i>
+            </div>
+        </div>
+
+        <header class="header">
+            <div class="user-profile">
+                <div class="greeting">
+                    <h1>Hello Rodrigo Quezada</h1>
+                    <p>Start your music journey today with Emusio</p>
+                </div>
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+
+            <div class="practice-btn-container">
+                <button
+                    class="practice-btn"
+                    onclick="openLessonModal()">
+                    <i class="fas fa-circle-play"></i>
+                    What should I practice today?
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="far fa-calendar-alt"></i></div>
+                    <div class="card-value">0</div>
+                    <div class="card-label">Scheduled Lessons</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="far fa-file-alt"></i></div>
+                    <div class="card-value">0</div>
+                    <div class="card-label">Total Lessons</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-wallet"></i></div>
+                    <div class="card-value">AUD0.00</div>
+                    <div class="card-label">Wallet Balance</div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="far fa-user"></i></div>
+                    <div class="card-value">0</div>
+                    <div class="card-label">Total Classes</div>
+                </div>
+            </div>
+        </header>
+
+        <section class="cta-section">
+            <h2>Start Your Musical Journey</h2>
+            <button class="cta-btn">
+                <i class="fas fa-search"></i> Explore Music Classes
+            </button>
+        </section>
+
+        <section class="teachers-section">
+            <h3>Top Rated Teacher</h3>
+            <div class="teachers-scroll">
+                <div class="teacher-card">
+                    <img src="https://images.unsplash.com/photo-1585747170385-cc147d44f8e8?q=80&w=731&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="teacher-img" alt="Teacher playing violin">
+                </div>
+                 <div class="teacher-card">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="teacher-img" alt="Male Teacher portrait">
+                </div>
+            </div>
+        </section>
+
+        <nav class="bottom-nav">
+            <a href="#" class="nav-item active">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-user"></i>
+                <span>Teachers</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-laptop"></i>
+                <span>Classes</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="far fa-comment-alt"></i>
+                <span>Messages</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-cog"></i>
+                <span>Account</span>
+            </a>
+            <a href="#" class="nav-item">
+                <i class="fas fa-bars"></i>
+                <span>Explore</span>
+            </a>
+        </nav>
+    </div>
+
+    <!-- Lesson Selection Modal -->
+    <div id="lessonModal" class="lesson-modal" aria-hidden="true">
+        <div class="lesson-modal__backdrop" onclick="closeLessonModal()"></div>
+
+        <div class="lesson-modal__panel" role="dialog" aria-modal="true" aria-labelledby="lessonModalTitle">
+            <h3 id="lessonModalTitle">Choose your lesson</h3>
+
+            <button class="lesson-modal__btn" onclick="goToPracticeCoach('violin_demo')">
+            🎻 Violin lesson
+            </button>
+
+            <button class="lesson-modal__btn" onclick="goToPracticeCoach('piano_demo')">
+            🎹 Piano lesson
+            </button>
+
+            <button class="lesson-modal__cancel" onclick="closeLessonModal()">Cancel</button>
+        </div>
+    </div>
+    
+    <script>
+        function openLessonModal() {
+            const modal = document.getElementById("lessonModal");
+            modal.classList.add("is-open");
+            modal.setAttribute("aria-hidden", "false");
+        }
+
+        function closeLessonModal() {
+            const modal = document.getElementById("lessonModal");
+            modal.classList.remove("is-open");
+            modal.setAttribute("aria-hidden", "true");
+        }
+
+        function goToPracticeCoach(lessonId) {
+            // cierra el modal y navega
+            closeLessonModal();
+            window.location.href = `/practice-coach-ui?lesson_id=${encodeURIComponent(lessonId)}`;
+        }
+
+        // opcional: cerrar con ESC
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeLessonModal();
+        });
+    </script>
+
+</body>
+</html>
