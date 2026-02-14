@@ -124,15 +124,26 @@ def get_lesson(lesson_id: str):
 # Frontend
 # ======================
 
+
+
 @app.get("/practice-coach-ui", response_class=HTMLResponse)
 def practice_coach_ui(request: Request):
     lesson_id = request.query_params.get("lesson_id")
+
+    # Si viene lesson_id → cargar coach
+    if lesson_id:
+        return templates.TemplateResponse(
+            "practice_coach.html",
+            {
+                "request": request,
+                "lesson_id": lesson_id
+            }
+        )
+
+    # Si NO viene lesson_id → cargar dashboard mock
     return templates.TemplateResponse(
-        "practice_coach.html",
-        {
-            "request": request,
-            "lesson_id": lesson_id
-        }
+        "emusio_app_mock/index.html",
+        {"request": request}
     )
 
 
