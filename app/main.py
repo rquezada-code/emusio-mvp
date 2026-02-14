@@ -196,6 +196,10 @@ def practice_coach(request: PracticeRequest):
 
     practice_plan = response.choices[0].message.content.strip()
 
+    print("===== RAW OPENAI RESPONSE =====")
+    print(practice_plan)
+    print("================================")
+
     return {"practice_plan": practice_plan}
 
 
