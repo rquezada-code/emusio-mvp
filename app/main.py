@@ -21,7 +21,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI(
     title="Emusio AI Practice Coach",
     description="AI coach that generates a short daily music practice plan",
-    version="0.3.0"
+    version="0.4.0"
 )
 
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -95,7 +95,7 @@ def resolve_lesson(lesson_id: str):
 
 @app.get("/")
 def root():
-    return RedirectResponse(url="/practice-coach-ui")
+    return RedirectResponse(url="/app")
 
 
 @app.get("/health")
@@ -103,7 +103,8 @@ def health():
     return {"message": "Emusio AI Practice Coach is running 🎵"}
 
 
-@app.get("/emusio-app-mock")
+# 🔹 App Home (Mock Dashboard)
+@app.get("/app")
 def emusio_app_mock(request: Request):
     return templates.TemplateResponse(
         "emusio_app_mock/index.html",
@@ -111,6 +112,7 @@ def emusio_app_mock(request: Request):
     )
 
 
+# 🔹 Lesson API
 @app.get("/api/lesson/{lesson_id}")
 def get_lesson(lesson_id: str):
 
@@ -122,6 +124,21 @@ def get_lesson(lesson_id: str):
     return lesson_data
 
 
+# 🔹 Practice UI (homogeneizada)
+@app.get("/app/practice", response_class=HTMLResponse)
+def practice_coach_ui(request: Request):
+    lesson_id = request.query_params.get("lesson_id")
+
+    return templates.TemplateResponse(
+        "practice_coach.html",
+        {
+            "request": request,
+            "lesson_id": lesson_id
+        }
+    )
+
+
+# 🔹 Practice Engine
 @app.post("/practice-coach", response_model=PracticeResponse)
 def practice_coach(request: PracticeRequest):
 
@@ -187,7 +204,6 @@ Lesson Transcription:
 {teacher_notes}
 """
 
-    # 3️⃣ Call OpenAI
     response = client.chat.completions.create(
         model="gpt-4.1-mini",
         messages=[
@@ -199,25 +215,4 @@ Lesson Transcription:
 
     practice_plan = response.choices[0].message.content.strip()
 
-    print("===== RAW OPENAI RESPONSE =====")
-    print(practice_plan)
-    print("================================")
-
     return {"practice_plan": practice_plan}
-
-
-# ======================
-# Frontend
-# ======================
-
-@app.get("/practice-coach-ui", response_class=HTMLResponse)
-def practice_coach_ui(request: Request):
-    lesson_id = request.query_params.get("lesson_id")
-
-    return templates.TemplateResponse(
-        "practice_coach.html",
-        {
-            "request": request,
-            "lesson_id": lesson_id
-        }
-    )
