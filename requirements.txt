@@ -56,3 +56,4 @@ yarl==1.22.0
 zstandard==0.25.0
 fastapi==0.110.0
 uvicorn==0.29.0
+openai==1.30.1
